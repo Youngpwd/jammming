@@ -1,4 +1,4 @@
-const clientId = ; //leave blank for github
+const clientId = "0af9025c16f049a4a5e063465d69b96a"; //leave blank for github
 const redirectUri = "http://localhost:3000/";
 
 let accessToken;
@@ -22,7 +22,7 @@ const Spotify = {
       window.history.pushState("Access Token", null, "/");
       return accessToken;
     } else {
-      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}_ID&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`;
+      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUri}`;
       window.location = accessUrl;
     }
   },
@@ -34,15 +34,9 @@ const Spotify = {
         Authorization: `Bearer ${accessToken}`,
       },
     })
-      .then(
-        (response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error("Request failed!");
-        },
-        (networkError) => console.log(networkError.message)
-      )
+      .then((response) => {
+        return response.json();
+      })
       .then((jsonResponse) => {
         if (!jsonResponse.tracks) {
           return [];
